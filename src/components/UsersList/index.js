@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import UsersListItem from './UsersListItem';
 
 function UsersList({ users, setUsers }) {
