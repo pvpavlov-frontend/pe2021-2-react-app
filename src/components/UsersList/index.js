@@ -7,7 +7,7 @@ import UsersListItem from './UsersListItem';
 
 // Взаимодействие компонентов:
 // 1 Parent => Child: props
-// 2 Child => Parent:
+// 2 Child => Parent: cb
 
 const usersDB = [
   { id: 1, firstName: 'Test', lastName: 'Testovich' },
@@ -23,22 +23,30 @@ class UsersList extends Component {
       users: usersDB.map(u => ({ ...u, isSelected: false })),
     };
   }
+  mapUser = (u, index) => {
+    const selectUser = () => {
+      const { users } = this.state;
+      const newUsers = [...users];
 
-  mapUser = u => (
-    <UsersListItem key={u.id} user={u} selectUser={this.selectUser} />
-  );
+      newUsers[index].isSelected = !newUsers[index].isSelected;
 
-  selectUser = id => {
-    const { users } = this.state;
-    const newUsers = [...users];
+      this.setState({ users: newUsers });
+    };
 
-    const selectedUserIndex = newUsers.findIndex(u => u.id === id);
-
-    newUsers[selectedUserIndex].isSelected =
-      !newUsers[selectedUserIndex].isSelected;
-
-    this.setState({ users: newUsers });
+    return <UsersListItem key={u.id} user={u} selectUser={selectUser} />;
   };
+
+  // selectUser = id => {
+  //   const { users } = this.state;
+  //   const newUsers = [...users];
+
+  //   const selectedUserIndex = newUsers.findIndex(u => u.id === id);
+
+  //   newUsers[selectedUserIndex].isSelected =
+  //     !newUsers[selectedUserIndex].isSelected;
+
+  //   this.setState({ users: newUsers });
+  // };
 
   render() {
     const { users } = this.state;

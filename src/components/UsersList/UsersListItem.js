@@ -5,11 +5,11 @@ function UsersListItem(props) {
   } = props;
 
   const liStyle = {
-    border: '2px dotted green',
+    border: `2px dotted ${isSelected ? 'green' : 'transparent'}`,
   };
 
   return (
-    <li onClick={() => selectUser(id)} style={isSelected ? liStyle : undefined}>
+    <li onClick={() => selectUser()} style={liStyle}>
       {firstName} {lastName}
     </li>
   );
