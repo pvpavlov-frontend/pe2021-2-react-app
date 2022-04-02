@@ -8,10 +8,6 @@ class Counter extends Component {
 
     this.state = {
       count: 0,
-
-      src: '',
-      firstName: '',
-      likesCount: 0,
     };
   }
 
@@ -32,9 +28,12 @@ class Counter extends Component {
   // Написать обработчик на кнопку -
   render() {
     const { count } = this.state;
+    const { step } = this.props;
     return (
       <>
-        <div>{count}</div>
+        <div>
+          {step}: {count}
+        </div>
         <button onClick={this.decrement}>-</button>
         <button onClick={this.increment}>+</button>
       </>
