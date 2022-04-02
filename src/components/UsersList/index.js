@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
+import UsersListItem from './UsersListItem';
 
 // IMPORTANT!!!
 // Повторяющиеся элементы списка должны иметь проп key,
 // "приколоченный" к передаваемым пропсам
 
-function UsersListItem(props) {
-  const {
-    user: { firstName, lastName },
-  } = props;
+// Взаимодействие компонентов:
+// 1 Parent => Child: props
+// 2 Child => Parent:
 
-  return (
-    <li>
-      {firstName} {lastName}
-    </li>
-  );
-}
+const usersDB = [
+  { id: 1, firstName: 'Test', lastName: 'Testovich' },
+  { id: 2, firstName: 'John', lastName: 'Dou' },
+  { id: 3, firstName: 'Jane', lastName: 'Dou' },
+];
 
 class UsersList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      users: [
-        { id: 1, firstName: 'Test', lastName: 'Testovich' },
-        { id: 2, firstName: 'John', lastName: 'Dou' },
-        { id: 3, firstName: 'Jane', lastName: 'Dou' },
-      ],
+      users: usersDB.map(u => ({ ...u, isSelected: false })),
     };
   }
 
-  mapUser = u => <UsersListItem key={u.id} user={u} />;
+  mapUser = u => (
+    <UsersListItem key={u.id} user={u} selectUser={this.selectUser} />
+  );
+
+  selectUser = id => {
+    const { users } = this.state;
+    const newUsers = [...users];
+
+    const selectedUserIndex = newUsers.findIndex(u => u.id === id);
+
+    newUsers[selectedUserIndex].isSelected =
+      !newUsers[selectedUserIndex].isSelected;
+
+    this.setState({ users: newUsers });
+  };
 
   render() {
     const { users } = this.state;
