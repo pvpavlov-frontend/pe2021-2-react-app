@@ -1,39 +1,39 @@
 import React, { Component } from 'react';
-import Counter from '../Counter';
+
+// IMPORTANT!!!
+// Повторяющиеся элементы списка должны иметь проп key,
+// "приколоченный" к передаваемым пропсам
+
+function UsersListItem(props) {
+  const {
+    user: { firstName, lastName },
+  } = props;
+
+  return (
+    <li>
+      {firstName} {lastName}
+    </li>
+  );
+}
 
 class UsersList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      counterSteps: [
-        { id: 1, step: 1 },
-        { id: 2, step: 10 },
-        { id: 3, step: 100 },
+      users: [
+        { id: 1, firstName: 'Test', lastName: 'Testovich' },
+        { id: 2, firstName: 'John', lastName: 'Dou' },
+        { id: 3, firstName: 'Jane', lastName: 'Dou' },
       ],
     };
   }
 
-  sortCounters = () => {
-    const { counterSteps } = this.state;
-    const newCounterSteps = [...counterSteps];
-    newCounterSteps.sort((a, b) => b.step - a.step);
-    this.setState({ counterSteps: newCounterSteps });
-  };
+  mapUser = u => <UsersListItem key={u.id} user={u} />;
 
   render() {
-    const { counterSteps } = this.state;
-
-    return (
-      <>
-        <div>
-          {counterSteps.map((cS, index) => (
-            <Counter key={cS.id} step={cS.step} />
-          ))}
-        </div>
-        <button onClick={this.sortCounters}>Sort</button>
-      </>
-    );
+    const { users } = this.state;
+    return <ul>{users.map(this.mapUser)}</ul>;
   }
 }
 
