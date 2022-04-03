@@ -13,7 +13,7 @@ function UsersListItem(props) {
   return (
     <li onClick={() => selectUser()} style={liStyle}>
       {firstName} {lastName}
-      <DeleteOutlineIcon onClick={} />
+      {/* <DeleteOutlineIcon onClick={} /> */}
     </li>
   );
 }
