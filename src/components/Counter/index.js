@@ -8,10 +8,6 @@ class Counter extends Component {
 
     this.state = {
       count: 0,
-
-      src: '',
-      firstName: '',
-      likesCount: 0,
     };
   }
 
