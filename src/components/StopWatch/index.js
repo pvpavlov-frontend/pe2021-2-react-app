@@ -5,7 +5,7 @@ class StopWatch extends Component {
     super(props);
 
     this.state = {
-      count: 0,
+      count: new Date(0, 0, 0, 0, 0, 0, 0),
     };
 
     this.timerId = null;
@@ -21,9 +21,12 @@ class StopWatch extends Component {
   }
 
   tick = () =>
-    this.setState(state => ({
-      count: state.count + 1,
-    }));
+    this.setState(state => {
+      const newTime = new Date(state.count);
+      newTime.setSeconds(newTime.getSeconds() + 1);
+      console.log('newTime', newTime instanceof Date);
+      return { count: newTime };
+    });
 
   start = () => {
     if (!this.timerId) {
@@ -36,16 +39,15 @@ class StopWatch extends Component {
     this.timerId = null;
   };
   reset = () => {
-    this.setState({ count: 0 });
+    this.setState({ count: new Date(0, 0, 0, 0, 0, 0, 0) });
   };
 
   render() {
     const { count } = this.state;
-    console.log('render');
 
     return (
       <article>
-        <div>{count}</div>
+        <div>{count.toLocaleTimeString('en-GB')}</div>
         <button onClick={this.start}>Start</button>
         <button onClick={this.stop}>Stop</button>
         <button onClick={this.reset}>Reset</button>
